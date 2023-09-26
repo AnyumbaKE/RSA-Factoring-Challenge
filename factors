@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+
+import sys
+import time
+
+# Function to factorize a number
+def factorize(num):
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return (i, num // i)
+    return None
+
+if __name__ == "__main__":
+    # Check if the correct number of command-line arguments is provided
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        exit()
+
+    # Get the input file name from the command-line argument
+    input_file = sys.argv[1]
+
+    try:
+        # Attempt to open the input file and read its lines
+        with open(input_file, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        print("File not found")
+        exit()
+
+    # Start measuring the total execution time
+    start_time = time.time()
+
+    # Loop through each line in the input file
+    for line in lines:
+        num = int(line.strip())  # Convert the line to an integer
+        factors = factorize(num)  # Find factors of the number
+        if factors:
+            print(f"{num} = {factors[0]} * {factors[1]}")  # Print the factors
+
+        # Check if the time limit (5 seconds) is exceeded
+        if time.time() - start_time > 5:
+            print("Time limit exceeded")
+            exit()
+
