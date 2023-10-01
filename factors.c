@@ -1,56 +1,24 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
-/**
- * main - Factorize as many numbers into a product of two smaller numbers
- * @argc: count
- * @argv: vector
- * Return: 0 Always
- **/
-int main(int argc, char *argv[])
+
+int main()
 {
-	FILE *stream;
-	char *line = NULL;
-	size_t len = 0;
-	long long flag = 1, div, rest, number, counter;
-	ssize_t nread;
+	long long int num = 239809320265259;
+	long int factor1 = 2;
+	long int factor2;
 
-	if (argc != 2)
+	while (num % factor1)
 	{
-		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
-
-	stream = fopen(argv[1], "r");
-	if (stream == NULL)
-	{
-		perror("fopen");
-		exit(EXIT_FAILURE);
-	}
-
-	while ((nread = getline(&line, &len, stream)) != -1)
-	{
-		flag = 1, div = 2;
-		number = atoll(line);
-		while (flag)
+		if (factor1 <= num)
 		{
-			rest = number % div;
-			if (!rest)
-			{
-				counter = number / div;
-				printf("%lld=%lld*%lld\n", number, counter, div);
-				flag = 0;
-			}
-			div++;
+			factor1++;
+		}
+		else
+		{
+			return (-1);
 		}
 	}
 
-	free(line);
-	fclose(stream);
-	exit(EXIT_SUCCESS);
+	factor2 = num / factor1;
+	printf("%lld = %ld * %ld\n", num, factor2, factor1);
+	return (0);
 }
